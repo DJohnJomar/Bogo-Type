@@ -1,5 +1,6 @@
 # Bogo Type
 Hello, this is Bogo Type. This is going to be a website to check your typing speed. Inspired by other type speed testing sites such as [MonkeyType](https://monkeytype.com/).
+This project is done for me to learn **React** and to practice **full-stack** development using the **MERN** stack. 
 
 ## Features
 - (Soon) Words paragraph viewer (You can see the words you need to type and your progress, if the characters you type is correct or not).

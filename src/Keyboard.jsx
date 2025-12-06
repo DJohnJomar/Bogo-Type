@@ -44,7 +44,7 @@ function Keyboard() {
         </div>
 
         <div className="row">
-            <Key char={"tab"} value={"Tab"} size={"medium"} pressedKey={pressedKey} />
+            {/* <Key char={"tab"} value={"Tab"} size={"medium"} pressedKey={pressedKey} /> */}
             <Key char={"Q"} value={"KeyQ"} size={"default"} pressedKey={pressedKey} />
             <Key char={"W"} value={"KeyW"} size={"default"} pressedKey={pressedKey} />
             <Key char={"E"} value={"KeyE"} size={"default"} pressedKey={pressedKey} />
@@ -61,7 +61,7 @@ function Keyboard() {
         </div>
 
         <div className="row">
-            <Key char={"capsLock"} value={"CapsLock"} size={"medium"} pressedKey={pressedKey} />
+            {/* <Key char={"capsLock"} value={"CapsLock"} size={"medium"} pressedKey={pressedKey} /> */}
             <Key char={"A"} value={"KeyA"} size={"default"} pressedKey={pressedKey} />
             <Key char={"S"} value={"KeyS"} size={"default"} pressedKey={pressedKey} />
             <Key char={"D"} value={"KeyD"} size={"default"} pressedKey={pressedKey} />
@@ -73,11 +73,11 @@ function Keyboard() {
             <Key char={"L"} value={"KeyL"} size={"default"} pressedKey={pressedKey} />
             <Key char={";"} value={"Semicolon"} size={"default"} pressedKey={pressedKey} />
             <Key char={"'"} value={"Quote"} size={"default"} pressedKey={pressedKey} />
-            <Key char={"enter"} value={"Enter"} size={"x-large"} pressedKey={pressedKey} />
+            {/* <Key char={"enter"} value={"Enter"} size={"x-large"} pressedKey={pressedKey} /> */}
         </div>
 
         <div className="row">
-            <Key char={"shift"} value={"ShiftLeft"} size={"large"} pressedKey={pressedKey} />
+            {/* <Key char={"shift"} value={"ShiftLeft"} size={"large"} pressedKey={pressedKey} /> */}
             <Key char={"Z"} value={"KeyZ"} size={"default"} pressedKey={pressedKey} />
             <Key char={"X"} value={"KeyX"} size={"default"} pressedKey={pressedKey} />
             <Key char={"C"} value={"KeyC"} size={"default"} pressedKey={pressedKey} />
@@ -88,18 +88,18 @@ function Keyboard() {
             <Key char={","} value={"Comma"} size={"default"} pressedKey={pressedKey} />
             <Key char={"."} value={"Period"} size={"default"} pressedKey={pressedKey} />
             <Key char={"/"} value={"Slash"} size={"default"} pressedKey={pressedKey} />
-            <Key char={"shift"} value={"ShiftRight"} size={"xx-large"} pressedKey={pressedKey} />
+            {/* <Key char={"shift"} value={"ShiftRight"} size={"xx-large"} pressedKey={pressedKey} /> */}
         </div>
 
         <div className="row">
-            <Key char={"ctrl"} value={"ControlLeft"} size={"default"} pressedKey={pressedKey} />
-            <Key char={"win"} value={"MetaLeft"} size={"default"} pressedKey={pressedKey} />
-            <Key char={"alt"} value={"AltLeft"} size={"default"} pressedKey={pressedKey} />
+            {/* <Key char={"ctrl"} value={"ControlLeft"} size={"default"} pressedKey={pressedKey} /> */}
+            {/* <Key char={"win"} value={"MetaLeft"} size={"default"} pressedKey={pressedKey} /> */}
+            {/* <Key char={"alt"} value={"AltLeft"} size={"default"} pressedKey={pressedKey} /> */}
             <Key char={"space"} value={"Space"} size={"spacebar"} pressedKey={pressedKey} />
-            <Key char={"alt"} value={"AltRight"} size={"default"} pressedKey={pressedKey} />
-            <Key char={"fn"} value={"Fn"} size={"default"} pressedKey={pressedKey} />
-            <Key char={"menu"} value={"ContextMenu"} size={"default"} pressedKey={pressedKey} />
-            <Key char={"ctrl"} value={"ControlRight"} size={"default"} pressedKey={pressedKey} />
+            {/* <Key char={"alt"} value={"AltRight"} size={"default"} pressedKey={pressedKey} /> */}
+            {/* <Key char={"fn"} value={"Fn"} size={"default"} pressedKey={pressedKey} /> */}
+            {/* <Key char={"menu"} value={"ContextMenu"} size={"default"} pressedKey={pressedKey} /> */}
+            {/* <Key char={"ctrl"} value={"ControlRight"} size={"default"} pressedKey={pressedKey} /> */}
         </div>
     </div>
 
