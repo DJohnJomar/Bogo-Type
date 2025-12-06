@@ -1,0 +1,12 @@
+.Keyboard{
+    display:flex;
+    flex-direction: column;
+    width:100vw;
+    max-width: fit-content;
+    padding:10px;
+    border:1px solid black;
+}
+
+.row{
+margin-bottom: 5px;
+}
