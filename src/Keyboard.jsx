@@ -2,28 +2,7 @@ import Key from "./Key";
 import "./assets/styles/Keyboard.css";
 import { useState, useEffect } from "react";
 
-function Keyboard() {
-  const [pressedKey, setPressedKey] = useState(null);
-
-  useEffect(() => {
-    function handleDown(e) {
-      setPressedKey(e.code);
-    //   console.log(e.code);
-    }
-
-    function handleUp() {
-      setPressedKey(null);
-    }
-
-    window.addEventListener("keydown", handleDown);
-    window.addEventListener("keyup", handleUp);
-
-    return () => {
-      window.removeEventListener("keydown", handleDown);
-      window.removeEventListener("keyup", handleUp);
-    };
-  }, []);
-
+function Keyboard({pressedKey}) {
   return (
     <div className="Keyboard">
         <div className="row">
