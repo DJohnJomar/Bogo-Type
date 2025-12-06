@@ -5,7 +5,7 @@ function Key({ char, value, size, pressedKey }) {
   let transition = "color 0.1s, background-color 0.1s, border 0.1s";
 
   let stylePressed =
-    pressedKey === value
+    pressedKey === value || pressedKey === value.toUpperCase()
       ? {
           color: "white",
           backgroundColor: "black",

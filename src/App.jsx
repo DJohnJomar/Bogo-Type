@@ -9,8 +9,8 @@ function App() {
 
   useEffect(() => {
     function handleDown(e) {
-      setPressedKey(e.code);
-    //   console.log(e.code);
+      setPressedKey(e.key);
+      console.log(e.key);
     }
 
     function handleUp() {
@@ -28,7 +28,8 @@ function App() {
 
   return (
     <div>
-      <TestView />
+      <h1>Bogo Type</h1>
+      <TestView pressedKey={pressedKey}/>
       <Keyboard pressedKey={pressedKey}/>
     </div>
   );
