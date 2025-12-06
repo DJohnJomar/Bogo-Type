@@ -1,0 +1,9 @@
+.TestView{
+    border:1px solid black;
+    padding:10px;
+    margin-bottom: 10px;
+}
+
+.TestView p{
+    font-size: 2rem;
+}

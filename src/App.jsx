@@ -1,13 +1,14 @@
-import './App.css'
-import Keyboard from './Keyboard';
+import "./App.css";
+import Keyboard from "./Keyboard";
+import TestView from "./TestView";
 
 function App() {
-
   return (
-    <>
-      <Keyboard/>
-    </>
-  )
+    <div>
+      <TestView />
+      <Keyboard />
+    </div>
+  );
 }
 
-export default App
+export default App;
