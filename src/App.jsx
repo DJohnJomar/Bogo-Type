@@ -10,7 +10,7 @@ function App() {
   useEffect(() => {
     function handleDown(e) {
       setPressedKey(e.key);
-      console.log(e.key);
+      // console.log(e.key);
     }
 
     function handleUp() {
