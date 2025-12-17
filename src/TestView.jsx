@@ -39,6 +39,25 @@ function TestView() {
     return currentCharIndex === index? true : false;
   }
 
+  function handleChange(e) {
+    const typedValue = e.target.value;
+    const testValue = testCharacters.join("");
+
+    // Prevent deletion into completed words
+    if (typedValue.length < typedCharacters.length) {
+      // Only allow deletion if it's in the current word
+      const lastCompletedIndex = typedCharacters.lastIndexOf(" ") + 1;
+      if (typedValue.length < lastCompletedIndex) {
+        return; // ignore backspace into previous words
+      }
+    }
+
+    // Prevent typing beyond test text
+    if (typedValue.length > testValue.length) return;
+
+    setTypedCharacters(typedValue);
+  }
+
   // onClick, uses useRef to give focus to the element. Click anywhere in the TestView Component to give focus
   /* Maps per character of words variable
         if the value of typedCharacter in current index is null, color is black.
@@ -65,7 +84,7 @@ function TestView() {
           type="text"
           autoFocus
           value={typedCharacters}
-          onChange={(e) => setTypedCharacters(e.target.value)}
+          onChange={handleChange}
         />
       </div>
       {/* <button onClick={() => getWords(200)}>New Test</button> */}
