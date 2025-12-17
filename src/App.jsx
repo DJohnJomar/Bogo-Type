@@ -29,7 +29,7 @@ function App() {
   return (
     <div>
       <h1>Bogo Type</h1>
-      <TestView pressedKey={pressedKey}/>
+      <TestView/>
       <Keyboard pressedKey={pressedKey}/>
     </div>
   );

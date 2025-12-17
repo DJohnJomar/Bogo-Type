@@ -1,60 +1,52 @@
 import "./assets/styles/TestView.css";
-import { useState, useEffect, useRef } from "react";
-/*
-Input focus system:
-React useRef to give focus to the input field
-tabIndex to make input field to be first when tabbing
+import { useState, useEffect, useRef, memo } from "react";
 
+//Utilize memo to render characters. React skips unmodified "Character" components on each render.
+//Uses Character memoized component
+const Character = memo(function Character({ char, typed }) {
+  let color = typed == null ? "black" : typed === char ? "green" : "red";
+  return <span style={{ color }}>{char}</span>;
+});
 
-*/
-function TestView({ pressedKey }) {
+function TestView() {
   const [typedCharacters, setTypedCharacters] = useState("");
-  const [words, setWords] = useState("");
+  const [testCharacters, setTestCharacters] = useState([]);
   const inputRef = useRef(null);
 
-  async function getWords(wordCount) {
-    let res = await fetch(
+  async function getTestWords(wordCount) {
+    const res = await fetch(
       `https://random-word-api.vercel.app/api?words=${wordCount}`
     );
-    let data = await res.json();
-    let words = "";
-    data.forEach((word) => {
-      words += `${word} `;
-    });
-    setWords(words);
+    const data = await res.json();
+
+    // Join data array, then return split characters.
+    const joinedWords = data.join(" ");
+    setTestCharacters(joinedWords.split(""));
   }
 
   useEffect(() => {
-    getWords(20);
+    getTestWords(200); 
   }, []);
 
-  return (
-    // onClick, uses useRef to give focus to the element. Click anywhere in the TestView Component to give focus
-    /* Maps per character of words variable
+  // onClick, uses useRef to give focus to the element. Click anywhere in the TestView Component to give focus
+  /* Maps per character of words variable
         if the value of typedCharacter in current index is null, color is black.
         if not null, if typedCharacter in index is equal to current word character, color is green else red
       */
+  return (
     <div className="TestView" onClick={() => inputRef.current.focus()}>
       <p className="words">
-        {[...words].map((char, i) => {
-          const typed = typedCharacters[i];
-
-          let color =
-            typed == null ? "black" : typed === char ? "green" : "red";
-
-          return (
-            <span key={i} style={{ color }}>
-              {char}
-            </span>
-          );
-        })}
+        {testCharacters.map((char, i) => (
+          <Character key={i} char={char} typed={typedCharacters[i]} />
+        ))}
       </p>
 
       <div className="cursor"></div>
 
       {/* The focus will be in the input since it has the useRef object. */}
       <div id="focus-error">
-        <label htmlFor="type-input">Click here/ Press Tab to focus</label>
+        <label htmlFor="type-input">Click here / Press Tab to focus</label>
+        {/* Invisible input */}
         <input
           ref={inputRef}
           tabIndex={0}
