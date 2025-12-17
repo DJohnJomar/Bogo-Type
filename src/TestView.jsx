@@ -3,9 +3,15 @@ import { useState, useEffect, useRef, memo } from "react";
 
 //Utilize memo to render characters. React skips unmodified "Character" components on each render.
 //Uses Character memoized component
-const Character = memo(function Character({ char, typed }) {
+const Character = memo(function Character({ char, typed, isCursor}) {
   let color = typed == null ? "black" : typed === char ? "green" : "red";
-  return <span style={{ color }}>{char}</span>;
+
+  const style = {
+    color, 
+    borderRight: "1.5px solid",
+    borderColor: isCursor? "black" : "transparent"
+  }
+  return <span style={style}>{char}</span>;
 });
 
 function TestView() {
@@ -28,6 +34,11 @@ function TestView() {
     getTestWords(200); 
   }, []);
 
+  function isCursor(index){
+    let currentCharIndex = typedCharacters.length - 1;
+    return currentCharIndex === index? true : false;
+  }
+
   // onClick, uses useRef to give focus to the element. Click anywhere in the TestView Component to give focus
   /* Maps per character of words variable
         if the value of typedCharacter in current index is null, color is black.
@@ -37,7 +48,7 @@ function TestView() {
     <div className="TestView" onClick={() => inputRef.current.focus()}>
       <p className="words">
         {testCharacters.map((char, i) => (
-          <Character key={i} char={char} typed={typedCharacters[i]} />
+          <Character key={i} char={char} typed={typedCharacters[i]} isCursor={isCursor(i)} />
         ))}
       </p>
 

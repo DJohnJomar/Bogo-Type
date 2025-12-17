@@ -17,8 +17,8 @@
   filter: blur(5px);
   transition: filter 0.2s ease;
   user-select: none; /* Makes the paragraph with spans (the test) unable to be selected*/
+  box-sizing: border-box;
 }
-
 
 /* focus-within: if any of its descendants gets in focus */
 .TestView:focus-within .words {
