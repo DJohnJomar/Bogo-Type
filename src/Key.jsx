@@ -2,19 +2,15 @@ import "./assets/styles/Key.css";
 
 function Key({ char, value, size, pressedKey }) {
   let computedSize = `${setSize(size)}rem`;
-  let transition = "color 0.1s, background-color 0.1s, border 0.1s";
+  let transition = "color 0.1s, background-color 0.1s";
 
   let stylePressed =
     pressedKey === value || pressedKey === value.toUpperCase()
       ? {
-          color: "white",
-          backgroundColor: "black",
-          border: "1px solid white",
+          backgroundColor: "var(--keyPress)",
         }
       : {
-          color: "black",
-          backgroundColor: "white",
-          border: "1px solid gray",
+          backgroundColor: "var(--darkerBg)",
         };
   return (
     <div

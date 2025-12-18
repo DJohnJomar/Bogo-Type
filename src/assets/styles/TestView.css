@@ -1,19 +1,19 @@
+
+
 .TestView {
   position: relative;
-  border: 1px solid black;
   width: 90%;
   height: 250px;
   padding: 10px;
   margin-bottom: 10px;
   cursor: text; 
   overflow: hidden;
-  
 }
 
 .words {
   margin:0;
+  color: var(--text);
   font-size: 2rem;
-  color: gray;
   filter: blur(5px);
   transition: filter 0.2s ease;
   user-select: none; /* Makes the paragraph with spans (the test) unable to be selected*/
@@ -47,4 +47,9 @@
   opacity: 0;
   position: absolute;
   pointer-events: none;
+}
+
+.stat-display{
+  display:flex;
+  justify-content: space-around;
 }

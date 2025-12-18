@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, memo } from "react";
 
 //Utilize memo to render characters. React skips unmodified "Character" components on each render.
 const Character = memo(function Character({ char, typed, isCursor }) {
-  let color = typed == null ? "black" : typed === char ? "green" : "red";
+  let color = typed == null ? "var(--text)" : typed === char ? "var(--white)" : "red";
   const style = {
     color,
     borderRight: "1.5px solid",
@@ -60,11 +60,11 @@ function TestView() {
     if (!isRunning) return;
     if (timeLeft === 0) {
       //Compute wpm
-      const minutes = testDuration/60;
-      const computedWpm = Math.round(correctWords/minutes);
+      const minutes = testDuration / 60;
+      const computedWpm = Math.round(correctWords / minutes);
       setWpm(computedWpm);
       return;
-    };
+    }
 
     const interval = setInterval(() => {
       setTimeLeft((prev) => prev - 1);
@@ -123,22 +123,23 @@ function TestView() {
       */
   return (
     <div className="TestView" onClick={() => inputRef.current.focus()}>
-      <div>
+      <div className="stat-display">
         <h2>Time: {timeLeft}</h2>
-        <h3>WPM: {wpm}</h3>
+        <h2>WPM: {wpm}</h2>
       </div>
-      <p className="words">
-        {testCharacters.map((char, i) => (
-          <Character
-            key={i}
-            char={char}
-            typed={typedCharacters[i]}
-            isCursor={isCursor(i)}
-          />
-        ))}
-      </p>
-
-      <div className="cursor"></div>
+      
+      <div>
+        <p className="words">
+          {testCharacters.map((char, i) => (
+            <Character
+              key={i}
+              char={char}
+              typed={typedCharacters[i]}
+              isCursor={isCursor(i)}
+            />
+          ))}
+        </p>
+      </div>
 
       {/* The focus will be in the input since it has the useRef object. */}
       <div id="focus-error">
