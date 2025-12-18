@@ -2,7 +2,6 @@ import "./assets/styles/TestView.css";
 import { useState, useEffect, useRef, memo } from "react";
 
 //Utilize memo to render characters. React skips unmodified "Character" components on each render.
-//Uses Character memoized component
 const Character = memo(function Character({ char, typed, isCursor }) {
   let color = typed == null ? "black" : typed === char ? "green" : "red";
   const style = {
@@ -16,11 +15,11 @@ const Character = memo(function Character({ char, typed, isCursor }) {
 function TestView() {
   const [typedCharacters, setTypedCharacters] = useState("");
   const [testCharacters, setTestCharacters] = useState([]);
+  const [isRunning, setIsRunning] = useState(false);
+  const [correctWords, setCorrectWords] = useState(0);
   const inputRef = useRef(null);
-
   const TEST_DURATION = 10;
   const [timeLeft, setTimeLeft] = useState(TEST_DURATION);
-  const [isRunning, setIsRunning] = useState(false);
 
   //Words API fetch
   async function getTestWords(wordCount) {
@@ -39,6 +38,17 @@ function TestView() {
     return currentCharIndex === index ? true : false;
   }
 
+  function checkLastWord(typedValue) {
+    const typedWords = typedValue.trim().split(" ");
+    const testWords = testCharacters.join("").split(" ");
+
+    const currentWordIndex = typedWords.length - 1;
+
+    if (typedWords[currentWordIndex] === testWords[currentWordIndex]) {
+      setCorrectWords((prev) => prev + 1);
+    }
+  }
+
   //Fetch words API on initial render
   useEffect(() => {
     getTestWords(200);
@@ -55,6 +65,17 @@ function TestView() {
 
     return () => clearInterval(interval);
   }, [isRunning, timeLeft]);
+
+  //
+  useEffect(() => {
+    if (
+      timeLeft === 0 &&
+      typedCharacters.length > 0 &&
+      !typedCharacters.endsWith(" ")
+    ) {
+      checkLastWord(typedCharacters);
+    }
+  }, [timeLeft]);
 
   //Changes in input element
   function handleChange(e) {
@@ -80,6 +101,11 @@ function TestView() {
     // Prevent typing beyond test text
     if (typedValue.length > testValue.length) return;
 
+    //Word completion check
+    if (typedValue.endsWith(" ") && !typedCharacters.endsWith(" ")) {
+      checkLastWord(typedValue);
+    }
+
     setTypedCharacters(typedValue);
   }
 
@@ -92,6 +118,7 @@ function TestView() {
     <div className="TestView" onClick={() => inputRef.current.focus()}>
       <div>
         <h2>Time: {timeLeft}</h2>
+        <h3>Correct words: {correctWords}</h3>
       </div>
       <p className="words">
         {testCharacters.map((char, i) => (
