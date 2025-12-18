@@ -18,8 +18,9 @@ function TestView() {
   const [isRunning, setIsRunning] = useState(false);
   const [correctWords, setCorrectWords] = useState(0);
   const inputRef = useRef(null);
-  const TEST_DURATION = 10;
-  const [timeLeft, setTimeLeft] = useState(TEST_DURATION);
+  const testDuration = 10;
+  const [timeLeft, setTimeLeft] = useState(testDuration);
+  const [wpm, setWpm] = useState(0);
 
   //Words API fetch
   async function getTestWords(wordCount) {
@@ -57,7 +58,13 @@ function TestView() {
   //Timer function
   useEffect(() => {
     if (!isRunning) return;
-    if (timeLeft === 0) return;
+    if (timeLeft === 0) {
+      //Compute wpm
+      const minutes = testDuration/60;
+      const computedWpm = Math.round(correctWords/minutes);
+      setWpm(computedWpm);
+      return;
+    };
 
     const interval = setInterval(() => {
       setTimeLeft((prev) => prev - 1);
@@ -118,7 +125,7 @@ function TestView() {
     <div className="TestView" onClick={() => inputRef.current.focus()}>
       <div>
         <h2>Time: {timeLeft}</h2>
-        <h3>Correct words: {correctWords}</h3>
+        <h3>WPM: {wpm}</h3>
       </div>
       <p className="words">
         {testCharacters.map((char, i) => (
