@@ -69,12 +69,11 @@ function TestView() {
     // Stop typing when time runs out
     if (timeLeft === 0) return;
 
-    // Prevent deletion into completed words
+    //Prevent erasing into completed words
     if (typedValue.length < typedCharacters.length) {
-      // Only allow deletion if it's in the current word
-      const lastCompletedIndex = typedCharacters.lastIndexOf(" ") + 1;
-      if (typedValue.length < lastCompletedIndex) {
-        return; // ignore backspace into previous words
+      const spaceIndex = typedCharacters.lastIndexOf(" ");
+      if (spaceIndex !== -1 && typedValue.length <= spaceIndex) {
+        return;
       }
     }
 
