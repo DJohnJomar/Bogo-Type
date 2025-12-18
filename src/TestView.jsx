@@ -3,14 +3,13 @@ import { useState, useEffect, useRef, memo } from "react";
 
 //Utilize memo to render characters. React skips unmodified "Character" components on each render.
 //Uses Character memoized component
-const Character = memo(function Character({ char, typed, isCursor}) {
+const Character = memo(function Character({ char, typed, isCursor }) {
   let color = typed == null ? "black" : typed === char ? "green" : "red";
-
   const style = {
-    color, 
+    color,
     borderRight: "1.5px solid",
-    borderColor: isCursor? "black" : "transparent"
-  }
+    borderColor: isCursor ? "black" : "transparent",
+  };
   return <span style={style}>{char}</span>;
 });
 
@@ -19,6 +18,11 @@ function TestView() {
   const [testCharacters, setTestCharacters] = useState([]);
   const inputRef = useRef(null);
 
+  const TEST_DURATION = 10;
+  const [timeLeft, setTimeLeft] = useState(TEST_DURATION);
+  const [isRunning, setIsRunning] = useState(false);
+
+  //Words API fetch
   async function getTestWords(wordCount) {
     const res = await fetch(
       `https://random-word-api.vercel.app/api?words=${wordCount}`
@@ -30,18 +34,40 @@ function TestView() {
     setTestCharacters(joinedWords.split(""));
   }
 
-  useEffect(() => {
-    getTestWords(200); 
-  }, []);
-
-  function isCursor(index){
+  function isCursor(index) {
     let currentCharIndex = typedCharacters.length - 1;
-    return currentCharIndex === index? true : false;
+    return currentCharIndex === index ? true : false;
   }
 
+  //Fetch words API on initial render
+  useEffect(() => {
+    getTestWords(200);
+  }, []);
+
+  //Timer function
+  useEffect(() => {
+    if (!isRunning) return;
+    if (timeLeft === 0) return;
+
+    const interval = setInterval(() => {
+      setTimeLeft((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [isRunning, timeLeft]);
+
+  //Changes in input element
   function handleChange(e) {
     const typedValue = e.target.value;
     const testValue = testCharacters.join("");
+
+    // Start timer on first keystroke
+    if (!isRunning && typedValue.length > 0) {
+      setIsRunning(true);
+    }
+
+    // Stop typing when time runs out
+    if (timeLeft === 0) return;
 
     // Prevent deletion into completed words
     if (typedValue.length < typedCharacters.length) {
@@ -65,9 +91,17 @@ function TestView() {
       */
   return (
     <div className="TestView" onClick={() => inputRef.current.focus()}>
+      <div>
+        <h2>Time: {timeLeft}</h2>
+      </div>
       <p className="words">
         {testCharacters.map((char, i) => (
-          <Character key={i} char={char} typed={typedCharacters[i]} isCursor={isCursor(i)} />
+          <Character
+            key={i}
+            char={char}
+            typed={typedCharacters[i]}
+            isCursor={isCursor(i)}
+          />
         ))}
       </p>
 
