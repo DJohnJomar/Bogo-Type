@@ -7,7 +7,7 @@ const Character = memo(function Character({ char, typed, isCursor }) {
   const style = {
     color,
     borderRight: "1.5px solid",
-    borderColor: isCursor ? "black" : "transparent",
+    borderColor: isCursor ? "var(--white)" : "transparent",
   };
   return <span style={style}>{char}</span>;
 });
