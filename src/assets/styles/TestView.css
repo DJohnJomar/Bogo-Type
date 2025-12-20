@@ -47,6 +47,7 @@
 
 #focus-error label{
   font-size:2rem;
+  color:var(--white);
 }
 
 #type-input {
