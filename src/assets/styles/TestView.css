@@ -7,7 +7,6 @@
   padding: 10px;
   margin-bottom: 10px;
   cursor: text; 
-  overflow: hidden;
 }
 
 .words {
@@ -19,6 +18,12 @@
   user-select: none; /* Makes the paragraph with spans (the test) unable to be selected*/
   box-sizing: border-box;
   font-family: "Space Mono", monospace;
+}
+
+.words-container{
+  height:9rem;
+  overflow-y: auto;
+  scrollbar-width: none;
 }
 
 /* focus-within: if any of its descendants gets in focus */

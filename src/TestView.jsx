@@ -2,14 +2,15 @@ import "./assets/styles/TestView.css";
 import { useState, useEffect, useRef, memo } from "react";
 
 //Utilize memo to render characters. React skips unmodified "Character" components on each render.
-const Character = memo(function Character({ char, typed, isCursor }) {
-  let color = typed == null ? "var(--text)" : typed === char ? "var(--white)" : "red";
+const Character = memo(function Character({ char, typed, isCursor, cursorRef }) {
+  let color =
+    typed == null ? "var(--text)" : typed === char ? "var(--white)" : "red";
   const style = {
     color,
     borderRight: "1.5px solid",
     borderColor: isCursor ? "var(--white)" : "transparent",
   };
-  return <span style={style}>{char}</span>;
+  return <span style={style} ref={isCursor? cursorRef : null}>{char}</span>;
 });
 
 function TestView() {
@@ -21,6 +22,8 @@ function TestView() {
   const testDuration = 10;
   const [timeLeft, setTimeLeft] = useState(testDuration);
   const [wpm, setWpm] = useState(0);
+  const wordsContainerRef = useRef(null);
+  const cursorRef = useRef(null);
 
   //Words API fetch
   async function getTestWords(wordCount) {
@@ -84,6 +87,27 @@ function TestView() {
     }
   }, [timeLeft]);
 
+  /*Auto Scrolls the words-container
+  vars:
+  cursorBottom = Position of the span cursor from top of the container to the bottom of the span (offsetTop + offsetHeight)
+  containerSccroll = how far the container have scrolled so far (scrollTop)
+  containerHeight = visible height of the container (clientHeight)
+  */
+  useEffect(() => {
+    //Early exit if either refs doesn't exist
+  if (!cursorRef.current || !wordsContainerRef.current) return;
+
+  const cursorBottom = cursorRef.current.offsetTop + cursorRef.current.offsetHeight;
+  const containerScroll = wordsContainerRef.current.scrollTop;
+  const containerHeight = wordsContainerRef.current.clientHeight;
+
+  // If the cursor goes below the visible container, scroll down
+  if (cursorBottom > containerScroll + containerHeight) {
+    wordsContainerRef.current.scrollTop = cursorBottom - containerHeight + 5; // small padding
+  }
+}, [typedCharacters]);
+
+
   //Changes in input element
   function handleChange(e) {
     const typedValue = e.target.value;
@@ -127,8 +151,8 @@ function TestView() {
         <h2>Time: {timeLeft}</h2>
         <h2>WPM: {wpm}</h2>
       </div>
-      
-      <div>
+
+      <div className="words-container" ref={wordsContainerRef}>
         <p className="words">
           {testCharacters.map((char, i) => (
             <Character
@@ -136,6 +160,7 @@ function TestView() {
               char={char}
               typed={typedCharacters[i]}
               isCursor={isCursor(i)}
+              cursorRef={cursorRef}
             />
           ))}
         </p>
