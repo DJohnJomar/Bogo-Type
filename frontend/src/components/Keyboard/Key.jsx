@@ -1,4 +1,4 @@
-import "./assets/styles/Key.css";
+import "./Key.css";
 
 function Key({ char, value, size, pressedKey }) {
   let computedSize = `${setSize(size)}rem`;
