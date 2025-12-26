@@ -1,6 +1,6 @@
 import "./App.css";
-import Keyboard from "./Keyboard";
-import TestView from "./TestView";
+import Keyboard from "./components/Keyboard/Keyboard.jsx";
+import TestView from "./pages/TestView/TestView.jsx";
 import { useState, useEffect } from "react";
 
 function App() {

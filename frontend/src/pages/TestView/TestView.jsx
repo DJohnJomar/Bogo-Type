@@ -1,4 +1,4 @@
-import "./assets/styles/TestView.css";
+import "./TestView.css";
 import { useState, useEffect, useRef, memo } from "react";
 
 //Utilize memo to render characters. React skips unmodified "Character" components on each render.

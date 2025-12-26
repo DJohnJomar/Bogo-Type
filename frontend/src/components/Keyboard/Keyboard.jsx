@@ -1,5 +1,5 @@
 import Key from "./Key";
-import "./assets/styles/Keyboard.css";
+import "./Keyboard.css";
 import { useState, useEffect } from "react";
 
 function Keyboard({pressedKey}) {
