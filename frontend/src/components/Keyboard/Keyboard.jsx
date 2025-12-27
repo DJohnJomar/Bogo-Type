@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 function Keyboard({pressedKey}) {
   return (
-    <div className="Keyboard">
+    <div className="Keyboard container">
         <div className="row flex flex-row">
             <Key char={"`"} value={"`"} size={"default"} pressedKey={pressedKey} />
             <Key char={"1"} value={"1"} size={"default"} pressedKey={pressedKey} />

@@ -1,8 +1,14 @@
 import "./TestView.css";
+import Keyboard from "../../components/Keyboard/Keyboard.jsx";
 import { useState, useEffect, useRef, memo } from "react";
 
 //Utilize memo to render characters. React skips unmodified "Character" components on each render.
-const Character = memo(function Character({ char, typed, isCursor, cursorRef }) {
+const Character = memo(function Character({
+  char,
+  typed,
+  isCursor,
+  cursorRef,
+}) {
   let color =
     typed == null ? "var(--text)" : typed === char ? "var(--white)" : "red";
   const style = {
@@ -10,7 +16,11 @@ const Character = memo(function Character({ char, typed, isCursor, cursorRef }) 
     borderRight: "1.5px solid",
     borderColor: isCursor ? "var(--white)" : "transparent",
   };
-  return <span style={style} ref={isCursor? cursorRef : null}>{char}</span>;
+  return (
+    <span style={style} ref={isCursor ? cursorRef : null}>
+      {char}
+    </span>
+  );
 });
 
 function TestView() {
@@ -18,12 +28,14 @@ function TestView() {
   const [testCharacters, setTestCharacters] = useState([]);
   const [isRunning, setIsRunning] = useState(false);
   const [correctWords, setCorrectWords] = useState(0);
+  const [pressedKey, setPressedKey] = useState(null);
   const inputRef = useRef(null);
   const testDuration = 10;
   const [timeLeft, setTimeLeft] = useState(testDuration);
   const [wpm, setWpm] = useState(0);
   const wordsContainerRef = useRef(null);
   const cursorRef = useRef(null);
+  
 
   //Words API fetch
   async function getTestWords(wordCount) {
@@ -95,18 +107,39 @@ function TestView() {
   */
   useEffect(() => {
     //Early exit if either refs doesn't exist
-  if (!cursorRef.current || !wordsContainerRef.current) return;
+    if (!cursorRef.current || !wordsContainerRef.current) return;
 
-  const cursorBottom = cursorRef.current.offsetTop + cursorRef.current.offsetHeight;
-  const containerScroll = wordsContainerRef.current.scrollTop;
-  const containerHeight = wordsContainerRef.current.clientHeight;
+    const cursorBottom =
+      cursorRef.current.offsetTop + cursorRef.current.offsetHeight;
+    const containerScroll = wordsContainerRef.current.scrollTop;
+    const containerHeight = wordsContainerRef.current.clientHeight;
 
-  // If the cursor goes below the visible container, scroll down
-  if (cursorBottom > containerScroll + containerHeight) {
-    wordsContainerRef.current.scrollTop = cursorBottom - containerHeight + 5; // small padding
-  }
-}, [typedCharacters]);
+    // If the cursor goes below the visible container, scroll down
+    if (cursorBottom > containerScroll + containerHeight) {
+      wordsContainerRef.current.scrollTop = cursorBottom - containerHeight + 5; // small padding
+    }
+  }, [typedCharacters]);
 
+
+  //Key Press handle for Keyboard Component
+  useEffect(() => {
+    function handleDown(e) {
+      setPressedKey(e.key);
+      // console.log(e.key);
+    }
+
+    function handleUp() {
+      setPressedKey(null);
+    }
+
+    window.addEventListener("keydown", handleDown);
+    window.addEventListener("keyup", handleUp);
+
+    return () => {
+      window.removeEventListener("keydown", handleDown);
+      window.removeEventListener("keyup", handleUp);
+    };
+  }, []);
 
   //Changes in input element
   function handleChange(e) {
@@ -179,6 +212,9 @@ function TestView() {
           value={typedCharacters}
           onChange={handleChange}
         />
+      </div>
+      <div>
+        <Keyboard/>
       </div>
       {/* <button onClick={() => getWords(200)}>New Test</button> */}
     </div>

@@ -1,38 +1,26 @@
 import "./App.css";
 import Keyboard from "./components/Keyboard/Keyboard.jsx";
 import TestView from "./pages/TestView/TestView.jsx";
+import Layout from "./components/Layout/Layout.jsx";
 import { useState, useEffect } from "react";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
-  const [pressedKey, setPressedKey] = useState(null);
 
-  useEffect(() => {
-    function handleDown(e) {
-      setPressedKey(e.key);
-      // console.log(e.key);
-    }
-
-    function handleUp() {
-      setPressedKey(null);
-    }
-
-    window.addEventListener("keydown", handleDown);
-    window.addEventListener("keyup", handleUp);
-
-    return () => {
-      window.removeEventListener("keydown", handleDown);
-      window.removeEventListener("keyup", handleUp);
-    };
-  }, []);
 
   return (
     <BrowserRouter>
-      <div>
+      {/* <section>
         <h1>Bogo Type</h1>
         <TestView />
         <Keyboard pressedKey={pressedKey} />
-      </div>
+      </section> */}
+      <Layout>
+        <Routes>
+          <Route path="/" element={<TestView/>} />
+          {/* <Route path="/about" element={<About />} /> */}
+        </Routes>
+      </Layout>
     </BrowserRouter>
   );
 }
