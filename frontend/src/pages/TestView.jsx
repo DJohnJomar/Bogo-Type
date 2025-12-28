@@ -1,5 +1,5 @@
 import "./TestView.css";
-import Keyboard from "../../components/Keyboard/Keyboard.jsx";
+import Keyboard from "../components/Keyboard.jsx";
 import { useState, useEffect, useRef, memo } from "react";
 
 //Utilize memo to render characters. React skips unmodified "Character" components on each render.

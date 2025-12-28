@@ -1,5 +1,5 @@
-import userIcon from "../../assets/userIcon.svg";
-import keyboardIcon from "../../assets/keyboardIcon.svg";
+import userIcon from "../assets/userIcon.svg";
+import keyboardIcon from "../assets/keyboardIcon.svg";
 
 function Navbar() {
   return (
