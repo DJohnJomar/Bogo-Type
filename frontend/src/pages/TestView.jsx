@@ -214,7 +214,7 @@ function TestView() {
         />
       </div>
       <div>
-        <Keyboard/>
+        <Keyboard pressedKey={pressedKey}/>
       </div>
       {/* <button onClick={() => getWords(200)}>New Test</button> */}
     </div>
