@@ -10,11 +10,6 @@ function App() {
 
   return (
     <BrowserRouter>
-      {/* <section>
-        <h1>Bogo Type</h1>
-        <TestView />
-        <Keyboard pressedKey={pressedKey} />
-      </section> */}
       <Layout>
         <Routes>
           <Route path="/" element={<TestView/>} />
