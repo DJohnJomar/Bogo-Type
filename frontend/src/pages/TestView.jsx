@@ -30,12 +30,11 @@ function TestView() {
   const [correctWords, setCorrectWords] = useState(0);
   const [pressedKey, setPressedKey] = useState(null);
   const inputRef = useRef(null);
-  const testDuration = 10;
+  const testDuration = 60;
   const [timeLeft, setTimeLeft] = useState(testDuration);
   const [wpm, setWpm] = useState(0);
   const wordsContainerRef = useRef(null);
   const cursorRef = useRef(null);
-  
 
   //Words API fetch
   async function getTestWords(wordCount) {
@@ -88,7 +87,7 @@ function TestView() {
     return () => clearInterval(interval);
   }, [isRunning, timeLeft]);
 
-  //
+  //Check last word when time hits 0
   useEffect(() => {
     if (
       timeLeft === 0 &&
@@ -114,12 +113,16 @@ function TestView() {
     const containerScroll = wordsContainerRef.current.scrollTop;
     const containerHeight = wordsContainerRef.current.clientHeight;
 
-    // If the cursor goes below the visible container, scroll down
-    if (cursorBottom > containerScroll + containerHeight) {
-      wordsContainerRef.current.scrollTop = cursorBottom - containerHeight + 5; // small padding
+    //Approximate one line height
+    const lineHeight = cursorRef.current.offsetHeight;
+
+    // Scroll when only one line is left visible
+    const scrollThreshold = containerScroll + containerHeight - lineHeight;
+
+    if (cursorBottom > scrollThreshold) {
+      wordsContainerRef.current.scrollTop = cursorBottom - containerHeight + lineHeight;
     }
   }, [typedCharacters]);
-
 
   //Key Press handle for Keyboard Component
   useEffect(() => {
@@ -180,7 +183,7 @@ function TestView() {
       */
   return (
     <div className="TestView" onClick={() => inputRef.current.focus()}>
-      <div className="stat-display">
+      <div className="flex justify-around">
         <h2>Time: {timeLeft}</h2>
         <h2>WPM: {wpm}</h2>
       </div>
@@ -214,7 +217,7 @@ function TestView() {
         />
       </div>
       <div>
-        <Keyboard pressedKey={pressedKey}/>
+        <Keyboard pressedKey={pressedKey} />
       </div>
       {/* <button onClick={() => getWords(200)}>New Test</button> */}
     </div>
