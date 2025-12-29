@@ -6,7 +6,7 @@ return (
     <div className="flex flex-col min-h-screen container px-4 sm:px-6 lg:px-8 ">
         <Navbar/>
 
-        <main className="flex-1">
+        <main className="flex-1 justify-center items-center">
             {children}
         </main>
 
