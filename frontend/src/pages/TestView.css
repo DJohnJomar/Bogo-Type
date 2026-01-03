@@ -17,7 +17,7 @@
 
 .words-container{
   height:9rem;
-  overflow-y: auto;
+  overflow-y: hidden;
   scrollbar-width: none;
 }
 
