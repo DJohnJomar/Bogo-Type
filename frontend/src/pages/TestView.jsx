@@ -120,7 +120,8 @@ function TestView() {
     const scrollThreshold = containerScroll + containerHeight - lineHeight;
 
     if (cursorBottom > scrollThreshold) {
-      wordsContainerRef.current.scrollTop = cursorBottom - containerHeight + lineHeight;
+      wordsContainerRef.current.scrollTop =
+        cursorBottom - containerHeight + lineHeight;
     }
   }, [typedCharacters]);
 
@@ -182,30 +183,29 @@ function TestView() {
         if not null, if typedCharacter in index is equal to current word character, color is green else red
       */
   return (
-    <div className="TestView" onClick={() => inputRef.current.focus()}>
+    <div className="TestView h-full" onClick={() => inputRef.current.focus()}>
       <div className="flex justify-around">
         <h2>Time: {timeLeft}</h2>
         <h2>WPM: {wpm}</h2>
       </div>
 
-      <div className="words-container" ref={wordsContainerRef}>
-        <p className="words">
-          {testCharacters.map((char, i) => (
-            <Character
-              key={i}
-              char={char}
-              typed={typedCharacters[i]}
-              isCursor={isCursor(i)}
-              cursorRef={cursorRef}
-            />
-          ))}
-        </p>
-      </div>
+      <div className="relative">
+        <div className="words-container" ref={wordsContainerRef}>
+          <p className="words">
+            {testCharacters.map((char, i) => (
+              <Character
+                key={i}
+                char={char}
+                typed={typedCharacters[i]}
+                isCursor={isCursor(i)}
+                cursorRef={cursorRef}
+              />
+            ))}
+          </p>
+        </div>
 
-      {/* The focus will be in the input since it has the useRef object. */}
-      <div id="focus-error">
         <label htmlFor="type-input">Click here / Press Tab to focus</label>
-        {/* Invisible input */}
+        {/* The focus will be in the input since it has the useRef object. */}
         <input
           ref={inputRef}
           tabIndex={0}
@@ -216,6 +216,7 @@ function TestView() {
           onChange={handleChange}
         />
       </div>
+
       <div>
         <Keyboard pressedKey={pressedKey} />
       </div>
