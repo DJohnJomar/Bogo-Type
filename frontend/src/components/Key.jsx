@@ -1,6 +1,8 @@
 
+const KEY_SCALE = 0.75;
+
 function Key({ char, value, size, pressedKey }) {
-  let computedSize = `${setSize(size)}em`;
+  let computedSize = `${setSize(size) * KEY_SCALE}em`;
   let transition = "color 0.1s, background-color 0.1s";
 
   let stylePressed =
@@ -13,10 +15,10 @@ function Key({ char, value, size, pressedKey }) {
         };
   return (
     <div
-      className="flex justify-center items-center lg:size-[3em] rounded-xl"
+      className="flex justify-center items-center h-8 rounded-xl"
       style={{ width: computedSize, transition, ...stylePressed }}
     >
-      <p>{char}</p>
+      <p className="text-base">{char}</p>
     </div>
   );
 }
