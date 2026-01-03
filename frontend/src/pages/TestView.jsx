@@ -191,7 +191,7 @@ function TestView() {
 
       <div className="relative">
         <div className="words-container" ref={wordsContainerRef}>
-          <p className="words">
+          <p className="words text-1xl text-[1.9rem] md:text-3xl lg:text-[2.4rem]">
             {testCharacters.map((char, i) => (
               <Character
                 key={i}
@@ -217,7 +217,7 @@ function TestView() {
         />
       </div>
 
-      <div>
+      <div className="m-5">
         <Keyboard pressedKey={pressedKey} />
       </div>
       {/* <button onClick={() => getWords(200)}>New Test</button> */}
