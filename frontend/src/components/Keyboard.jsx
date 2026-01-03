@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 function Keyboard({ pressedKey }) {
   return (
     <div className="flex flex-col items-center w-screen max-w-fit px-2 gap-2 hidden lg:flex">
-      <div className="gap-0.75 flex flex-row">
+      {/* <div className="gap-0.75 flex flex-row">
         <Key char={"`"} value={"`"} size={"default"} pressedKey={pressedKey} />
         <Key char={"1"} value={"1"} size={"default"} pressedKey={pressedKey} />
         <Key char={"2"} value={"2"} size={"default"} pressedKey={pressedKey} />
@@ -24,7 +24,7 @@ function Keyboard({ pressedKey }) {
           size={"large"}
           pressedKey={pressedKey}
         />
-      </div>
+      </div> */}
 
       <div className="gap-0.75 flex flex-row">
         {/* <Key char={"tab"} value={"Tab"} size={"medium"} pressedKey={pressedKey} /> */}
@@ -40,12 +40,12 @@ function Keyboard({ pressedKey }) {
         <Key char={"P"} value={"p"} size={"default"} pressedKey={pressedKey} />
         <Key char={"["} value={"["} size={"default"} pressedKey={pressedKey} />
         <Key char={"]"} value={"]"} size={"default"} pressedKey={pressedKey} />
-        <Key
+        {/* <Key
           char={"\\ "}
           value={"\\"}
           size={"medium"}
           pressedKey={pressedKey}
-        />
+        /> */}
       </div>
 
       <div className="gap-0.75 flex flex-row">
