@@ -1,6 +1,7 @@
 import "./TestView.css";
 import Keyboard from "../components/Keyboard.jsx";
 import { useState, useEffect, useRef, memo } from "react";
+import restartIcon from "../assets/restartIcon.svg";
 
 //Utilize memo to render characters. React skips unmodified "Character" components on each render.
 const Character = memo(function Character({
@@ -177,20 +178,39 @@ function TestView() {
     setTypedCharacters(typedValue);
   }
 
+  function restartTest() {
+    setTypedCharacters("");
+    setCorrectWords(0);
+    setWpm(0);
+    setTimeLeft(testDuration);
+    setIsRunning(false);
+    setPressedKey(null);
+
+    getTestWords(200);
+
+    // Reset scroll
+    if (wordsContainerRef.current) {
+      wordsContainerRef.current.scrollTop = 0;
+    }
+  }
+
   // onClick, uses useRef to give focus to the element. Click anywhere in the TestView Component to give focus
   /* Maps per character of words variable
         if the value of typedCharacter in current index is null, color is black.
         if not null, if typedCharacter in index is equal to current word character, color is green else red
       */
   return (
-    <div className="TestView h-full flex flex-col gap-5" onClick={() => inputRef.current.focus()}>
+    <div
+      className="TestView h-full flex flex-col gap-5"
+      onClick={() => inputRef.current.focus()}
+    >
       <div className="flex justify-around w-full">
         <h2>Time: {timeLeft}</h2>
         <h2>WPM: {wpm}</h2>
       </div>
 
       <div className="relative">
-        <div className="words-container" ref={wordsContainerRef}>
+        <div className="words-container cursor-pointer" ref={wordsContainerRef}>
           <p className="words text-1xl text-[1.9rem] md:text-3xl lg:text-[2.4rem]">
             {testCharacters.map((char, i) => (
               <Character
@@ -204,7 +224,9 @@ function TestView() {
           </p>
         </div>
 
-        <label htmlFor="type-input" className="text-lg md:text-xl xl:text-3xl">Click here / Press Tab to focus</label>
+        <label htmlFor="type-input" className="text-lg md:text-xl xl:text-3xl">
+          Click here / Press Tab to focus
+        </label>
         {/* The focus will be in the input since it has the useRef object. */}
         <input
           ref={inputRef}
@@ -217,10 +239,19 @@ function TestView() {
         />
       </div>
 
+      <div className="flex justify-center">
+        <button onClick={restartTest} className="cursor-pointer transform transition-transform duration-200 hover:scale-125">
+          <img
+            src={restartIcon}
+            alt="Test restart button"
+            className="invert w-8 h-8"
+          />
+        </button>
+      </div>
+
       <div className="m-5">
         <Keyboard pressedKey={pressedKey} />
       </div>
-      {/* <button onClick={() => getWords(200)}>New Test</button> */}
     </div>
   );
 }
