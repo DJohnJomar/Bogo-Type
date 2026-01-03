@@ -204,7 +204,7 @@ function TestView() {
           </p>
         </div>
 
-        <label htmlFor="type-input">Click here / Press Tab to focus</label>
+        <label htmlFor="type-input" className="text-lg md:text-xl xl:text-3xl">Click here / Press Tab to focus</label>
         {/* The focus will be in the input since it has the useRef object. */}
         <input
           ref={inputRef}
