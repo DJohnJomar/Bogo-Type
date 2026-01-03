@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 function Keyboard({ pressedKey }) {
   return (
-    <div className="flex flex-col items-center w-screen max-w-fit px-2 gap-2 hidden lg:flex">
+    <div className="flex-col items-center w-screen max-w-fit px-2 gap-2 hidden sm:flex">
       {/* <div className="gap-0.75 flex flex-row">
         <Key char={"`"} value={"`"} size={"default"} pressedKey={pressedKey} />
         <Key char={"1"} value={"1"} size={"default"} pressedKey={pressedKey} />
