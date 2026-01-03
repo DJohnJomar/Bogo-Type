@@ -1,4 +1,3 @@
-import "./Key.css";
 
 function Key({ char, value, size, pressedKey }) {
   let computedSize = `${setSize(size)}rem`;
@@ -14,7 +13,7 @@ function Key({ char, value, size, pressedKey }) {
         };
   return (
     <div
-      className="Key flex justify-center items-center"
+      className="flex justify-center items-center size-[3em] rounded-xl"
       style={{ width: computedSize, transition, ...stylePressed }}
     >
       <p>{char}</p>

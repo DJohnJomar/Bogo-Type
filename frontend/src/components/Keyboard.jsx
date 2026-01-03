@@ -1,11 +1,10 @@
 import Key from "./Key";
-import "./Keyboard.css";
 import { useState, useEffect } from "react";
 
 function Keyboard({pressedKey}) {
   return (
-    <div className="Keyboard container">
-        <div className="row flex flex-row">
+    <div className="flex flex-col items-center w-screen max-w-fit gap-2">
+        <div className="gap-2 flex flex-row">
             <Key char={"`"} value={"`"} size={"default"} pressedKey={pressedKey} />
             <Key char={"1"} value={"1"} size={"default"} pressedKey={pressedKey} />
             <Key char={"2"} value={"2"} size={"default"} pressedKey={pressedKey} />
@@ -22,7 +21,7 @@ function Keyboard({pressedKey}) {
             <Key char={"backspace"} value={"Backspace"} size={"large"} pressedKey={pressedKey} />
         </div>
 
-        <div className="row flex flex-row">
+        <div className="gap-2 flex flex-row">
             {/* <Key char={"tab"} value={"Tab"} size={"medium"} pressedKey={pressedKey} /> */}
             <Key char={"Q"} value={"q"} size={"default"} pressedKey={pressedKey} />
             <Key char={"W"} value={"w"} size={"default"} pressedKey={pressedKey} />
@@ -39,7 +38,7 @@ function Keyboard({pressedKey}) {
             <Key char={"\\ "} value={"\\"} size={"medium"} pressedKey={pressedKey} />
         </div>
 
-        <div className="row flex flex-row">
+        <div className="gap-2 flex flex-row">
             {/* <Key char={"capsLock"} value={"CapsLock"} size={"medium"} pressedKey={pressedKey} /> */}
             <Key char={"A"} value={"a"} size={"default"} pressedKey={pressedKey} />
             <Key char={"S"} value={"s"} size={"default"} pressedKey={pressedKey} />
@@ -55,7 +54,7 @@ function Keyboard({pressedKey}) {
             {/* <Key char={"enter"} value={"Enter"} size={"x-large"} pressedKey={pressedKey} /> */}
         </div>
 
-        <div className="row flex flex-row">
+        <div className="gap-2 flex flex-row">
             {/* <Key char={"shift"} value={"ShiftLeft"} size={"large"} pressedKey={pressedKey} /> */}
             <Key char={"Z"} value={"z"} size={"default"} pressedKey={pressedKey} />
             <Key char={"X"} value={"x"} size={"default"} pressedKey={pressedKey} />
@@ -70,7 +69,7 @@ function Keyboard({pressedKey}) {
             {/* <Key char={"shift"} value={"ShiftRight"} size={"xx-large"} pressedKey={pressedKey} /> */}
         </div>
 
-        <div className="row flex flex-row">
+        <div className="gap-2 flex flex-row">
             {/* <Key char={"ctrl"} value={"ControlLeft"} size={"default"} pressedKey={pressedKey} /> */}
             {/* <Key char={"win"} value={"MetaLeft"} size={"default"} pressedKey={pressedKey} /> */}
             {/* <Key char={"alt"} value={"AltLeft"} size={"default"} pressedKey={pressedKey} /> */}
