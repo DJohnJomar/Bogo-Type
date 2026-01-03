@@ -227,9 +227,16 @@ function TestView() {
           ))}
         </span>
       </div>
-      <div className="flex justify-around w-full">
-        <h2>Time: {timeLeft}</h2>
-        <h2>WPM: {wpm}</h2>
+
+      <div className="flex justify-around w-full ">
+        <h2 className="text-3xl text-(--neon-green) ">{timeLeft}</h2>
+        <h2
+          className={`text-3xl text-(--neon-green) transition:all duration-200 ${
+            wpm != 0 ? "opacity-100 scale-100" : "opacity-0 scale-90"
+          }`}
+        >
+          WPM: {wpm}
+        </h2>
       </div>
 
       <div className="relative">
