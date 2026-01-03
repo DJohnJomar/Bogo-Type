@@ -31,11 +31,13 @@ function TestView() {
   const [correctWords, setCorrectWords] = useState(0);
   const [pressedKey, setPressedKey] = useState(null);
   const inputRef = useRef(null);
-  const testDuration = 60;
-  const [timeLeft, setTimeLeft] = useState(testDuration);
+  const defaultDuration = 60;
+  const [timeLeft, setTimeLeft] = useState(defaultDuration);
+  const [selectedDuration, setSelectedDuration] = useState(defaultDuration);
   const [wpm, setWpm] = useState(0);
   const wordsContainerRef = useRef(null);
   const cursorRef = useRef(null);
+  const timeOptions = [15, 30, 60, 120];
 
   //Words API fetch
   async function getTestWords(wordCount) {
@@ -75,7 +77,7 @@ function TestView() {
     if (!isRunning) return;
     if (timeLeft === 0) {
       //Compute wpm
-      const minutes = testDuration / 60;
+      const minutes = selectedDuration / 60;
       const computedWpm = Math.round(correctWords / minutes);
       setWpm(computedWpm);
       return;
@@ -182,7 +184,7 @@ function TestView() {
     setTypedCharacters("");
     setCorrectWords(0);
     setWpm(0);
-    setTimeLeft(testDuration);
+    setTimeLeft(selectedDuration);
     setIsRunning(false);
     setPressedKey(null);
 
@@ -192,6 +194,11 @@ function TestView() {
     if (wordsContainerRef.current) {
       wordsContainerRef.current.scrollTop = 0;
     }
+  }
+
+  function timeSelect(time) {
+    setSelectedDuration(time);
+    setTimeLeft(time);
   }
 
   // onClick, uses useRef to give focus to the element. Click anywhere in the TestView Component to give focus
@@ -204,6 +211,22 @@ function TestView() {
       className="TestView h-full flex flex-col gap-5"
       onClick={() => inputRef.current.focus()}
     >
+      <div className="bg-(--darkerBg) rounded-xl">
+        <span>
+          {timeOptions.map((time) => (
+            <button
+              key={time}
+              onClick={() => timeSelect(time)}
+              disabled={isRunning} // prevent changing mid-test
+              className={`px-4 py-2 transition-colors
+        ${selectedDuration === time ? "text-(--neon-green)" : "text-(--white)"}
+        hover:text-(--lighter-neon-green)`}
+            >
+              {time}s
+            </button>
+          ))}
+        </span>
+      </div>
       <div className="flex justify-around w-full">
         <h2>Time: {timeLeft}</h2>
         <h2>WPM: {wpm}</h2>
@@ -240,7 +263,10 @@ function TestView() {
       </div>
 
       <div className="flex justify-center">
-        <button onClick={restartTest} className="cursor-pointer transform transition-transform duration-200 hover:scale-125">
+        <button
+          onClick={restartTest}
+          className="cursor-pointer transform transition-transform duration-200 hover:scale-125"
+        >
           <img
             src={restartIcon}
             alt="Test restart button"
