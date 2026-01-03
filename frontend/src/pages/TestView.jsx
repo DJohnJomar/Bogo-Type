@@ -183,8 +183,8 @@ function TestView() {
         if not null, if typedCharacter in index is equal to current word character, color is green else red
       */
   return (
-    <div className="TestView h-full" onClick={() => inputRef.current.focus()}>
-      <div className="flex justify-around">
+    <div className="TestView h-full flex flex-col gap-5" onClick={() => inputRef.current.focus()}>
+      <div className="flex justify-around w-full">
         <h2>Time: {timeLeft}</h2>
         <h2>WPM: {wpm}</h2>
       </div>
