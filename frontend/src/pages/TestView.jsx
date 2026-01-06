@@ -211,7 +211,7 @@ function TestView() {
       className="TestView h-full flex flex-col gap-5"
       onClick={() => inputRef.current.focus()}
     >
-      <div className="bg-(--darkerBg) rounded-xl">
+      <div className={`bg-(--darkerBg) rounded-xl transition:all duration-200 ${isRunning? "opacity-0 scale-90" : "opacity-100 scale-100"}`}>
         <span>
           {timeOptions.map((time) => (
             <button
@@ -228,8 +228,8 @@ function TestView() {
         </span>
       </div>
 
-      <div className="flex justify-around w-full ">
-        <h2 className="text-3xl text-(--neon-green) ">{timeLeft}</h2>
+      <div className={`flex justify-around w-full`}>
+        <h2 className={`text-3xl text-(--neon-green) transition:all duration-200 ${isRunning? "opacity-100 scale-100": "opacity-0 scale-90"}`}>{timeLeft}</h2>
         <h2
           className={`text-3xl text-(--neon-green) transition:all duration-200 ${
             wpm != 0 ? "opacity-100 scale-100" : "opacity-0 scale-90"
