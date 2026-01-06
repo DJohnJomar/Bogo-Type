@@ -211,7 +211,11 @@ function TestView() {
       className="TestView h-full flex flex-col gap-5"
       onClick={() => inputRef.current.focus()}
     >
-      <div className={`bg-(--darkerBg) rounded-xl transition:all duration-200 ${isRunning? "opacity-0 scale-90" : "opacity-100 scale-100"}`}>
+      <div
+        className={`bg-(--darkerBg) rounded-xl transition:all duration-200 ${
+          isRunning ? "opacity-0 scale-90" : "opacity-100 scale-100"
+        }`}
+      >
         <span>
           {timeOptions.map((time) => (
             <button
@@ -229,7 +233,13 @@ function TestView() {
       </div>
 
       <div className={`flex justify-around w-full`}>
-        <h2 className={`text-3xl text-(--neon-green) transition:all duration-200 ${isRunning? "opacity-100 scale-100": "opacity-0 scale-90"}`}>{timeLeft}</h2>
+        <h2
+          className={`text-3xl text-(--neon-green) transition:all duration-200 ${
+            isRunning ? "opacity-100 scale-100" : "opacity-0 scale-90"
+          }`}
+        >
+          {timeLeft}
+        </h2>
         <h2
           className={`text-3xl text-(--neon-green) transition:all duration-200 ${
             wpm != 0 ? "opacity-100 scale-100" : "opacity-0 scale-90"
@@ -270,16 +280,33 @@ function TestView() {
       </div>
 
       <div className="flex justify-center">
-        <button
-          onClick={restartTest}
-          className="cursor-pointer transform transition-transform duration-200 hover:scale-125"
-        >
-          <img
-            src={restartIcon}
-            alt="Test restart button"
-            className="invert w-8 h-8"
-          />
-        </button>
+        <div className="relative group">
+          <button
+            onClick={restartTest}
+            className="cursor-pointer transform transition-transform duration-200 hover:scale-125"
+          >
+            <img
+              src={restartIcon}
+              alt="Restart test"
+              className="invert w-8 h-8"
+            />
+          </button>
+
+          <span
+            className="
+        pointer-events-none
+        absolute top-full left-1/2
+        -translate-x-1/2
+        rounded-md bg-black px-2 py-1
+        text-xs text-(--white) whitespace-nowrap
+        opacity-0 scale-95
+        transition-all duration-200
+        group-hover:opacity-100 group-hover:scale-100
+      "
+          >
+            Restart test
+          </span>
+        </div>
       </div>
 
       <div className="m-5">
