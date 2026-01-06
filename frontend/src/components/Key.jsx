@@ -15,7 +15,7 @@ function Key({ char, value, size, pressedKey }) {
         };
   return (
     <div
-      className="flex justify-center items-center h-8 rounded-xl"
+      className="flex justify-center items-center h-8 rounded-xl text-(--white)"
       style={{ width: computedSize, transition, ...stylePressed }}
     >
       <p className="text-base">{char}</p>

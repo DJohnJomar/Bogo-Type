@@ -11,7 +11,7 @@ function Navbar() {
             alt="Keyboard Logo"
             className="invert w-10 h-10"
           />
-          <h1 className="text-4xl font-bold tracking-tight">Bogo Type</h1>
+          <h1 className="text-4xl font-bold tracking-tight text-(--white)">Bogo Type</h1>
         </span>
 
         <button className="flex items-center gap-2 text-white">
