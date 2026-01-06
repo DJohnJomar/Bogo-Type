@@ -218,7 +218,7 @@ function TestView() {
               key={time}
               onClick={() => timeSelect(time)}
               disabled={isRunning} // prevent changing mid-test
-              className={`px-4 py-2 transition-colors
+              className={`px-4 py-2 transition-colors transform transition-transform duration-200 hover:scale-125
         ${selectedDuration === time ? "text-(--neon-green)" : "text-(--white)"}
         hover:text-(--lighter-neon-green)`}
             >
