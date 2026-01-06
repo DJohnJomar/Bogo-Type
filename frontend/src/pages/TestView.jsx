@@ -2,27 +2,7 @@ import "./TestView.css";
 import Keyboard from "../components/Keyboard.jsx";
 import { useState, useEffect, useRef, memo } from "react";
 import restartIcon from "../assets/restartIcon.svg";
-
-//Utilize memo to render characters. React skips unmodified "Character" components on each render.
-const Character = memo(function Character({
-  char,
-  typed,
-  isCursor,
-  cursorRef,
-}) {
-  let color =
-    typed == null ? "var(--text)" : typed === char ? "var(--white)" : "red";
-  const style = {
-    color,
-    borderRight: "1.5px solid",
-    borderColor: isCursor ? "var(--white)" : "transparent",
-  };
-  return (
-    <span style={style} ref={isCursor ? cursorRef : null}>
-      {char}
-    </span>
-  );
-});
+import Character from "../components/Character.jsx";
 
 function TestView() {
   const [typedCharacters, setTypedCharacters] = useState("");
