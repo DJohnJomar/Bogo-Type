@@ -245,7 +245,7 @@ function TestView() {
             wpm != 0 ? "opacity-100 scale-100" : "opacity-0 scale-90"
           }`}
         >
-          WPM: {wpm}
+          {wpm} wpm
         </h2>
       </div>
 
