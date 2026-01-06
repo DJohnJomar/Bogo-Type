@@ -276,6 +276,10 @@ function TestView() {
           autoFocus
           value={typedCharacters}
           onChange={handleChange}
+          autoComplete="off"
+          autoCorrect="off"
+          spellCheck="false"
+          autoCapitalize="off"
         />
       </div>
 
