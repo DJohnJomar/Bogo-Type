@@ -14,7 +14,7 @@ function TestView() {
   const defaultDuration = 60;
   const [timeLeft, setTimeLeft] = useState(defaultDuration);
   const [selectedDuration, setSelectedDuration] = useState(defaultDuration);
-  const [wpm, setWpm] = useState(0);
+  const [wpm, setWpm] = useState(-1);
   const wordsContainerRef = useRef(null);
   const cursorRef = useRef(null);
   const timeOptions = [15, 30, 60, 120];
@@ -122,17 +122,16 @@ function TestView() {
   }, []);
 
   function countCorrectWords() {
-    const typedChars = typedCharacters.split("");
-    let correct = 0;
-    let currentWordCorrect = true;
+    const typedWords = typedCharacters.trim().split(" ");
+    const testWords = testCharacters.join("").split(" ");
 
-    testCharacters.forEach((char, i) => {
-      if (typedChars[i] !== char) currentWordCorrect = false;
-      if (char === " ") {
-        if (currentWordCorrect) correct++;
-        currentWordCorrect = true;
+    let correct = 0;
+
+    for (let i = 0; i < typedWords.length; i++) {
+      if (typedWords[i] === testWords[i]) {
+        correct++;
       }
-    });
+    }
 
     return correct;
   }
@@ -164,7 +163,7 @@ function TestView() {
   function restartTest() {
     setTypedCharacters("");
     setCorrectWords(0);
-    setWpm(0);
+    setWpm(-1);
     setTimeLeft(selectedDuration);
     setIsRunning(false);
     setPressedKey(null);
@@ -223,7 +222,7 @@ function TestView() {
         </h2>
         <h2
           className={`text-3xl text-(--neon-green) transition:all duration-200 ${
-            wpm != 0 ? "opacity-100 scale-100" : "opacity-0 scale-90"
+            wpm >= 0 ? "opacity-100 scale-100" : "opacity-0 scale-90"
           }`}
         >
           {wpm} wpm
@@ -257,7 +256,6 @@ function TestView() {
           autoFocus
           value={typedCharacters}
           onChange={handleChange}
-
           onPaste={(e) => e.preventDefault()}
           onCopy={(e) => e.preventDefault()}
           onCut={(e) => e.preventDefault()}
