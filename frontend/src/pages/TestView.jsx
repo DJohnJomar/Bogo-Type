@@ -36,17 +36,6 @@ function TestView() {
     return currentCharIndex === index ? true : false;
   }
 
-  function checkLastWord(typedValue) {
-    const typedWords = typedValue.trim().split(" ");
-    const testWords = testCharacters.join("").split(" ");
-
-    const currentWordIndex = typedWords.length - 1;
-
-    if (typedWords[currentWordIndex] === testWords[currentWordIndex]) {
-      setCorrectWords((prev) => prev + 1);
-    }
-  }
-
   //Fetch words API on initial render
   useEffect(() => {
     getTestWords(200);
@@ -56,9 +45,13 @@ function TestView() {
   useEffect(() => {
     if (!isRunning) return;
     if (timeLeft === 0) {
-      //Compute wpm
-      const minutes = selectedDuration / 60;
-      const computedWpm = Math.round(correctWords / minutes);
+      let correctChars = 0;
+      for(let i = 0; i < typedCharacters.length; i ++){
+        if(typedCharacters[i] === testCharacters[i]) correctChars++;
+      }
+      const computedWpm = Math.round(
+        correctChars / 5 / (selectedDuration / 60)
+      );
       setWpm(computedWpm);
       return;
     }
@@ -77,7 +70,7 @@ function TestView() {
       typedCharacters.length > 0 &&
       !typedCharacters.endsWith(" ")
     ) {
-      checkLastWord(typedCharacters);
+      setCorrectWords(countCorrectWords);
     }
   }, [timeLeft]);
 
@@ -128,6 +121,22 @@ function TestView() {
     };
   }, []);
 
+  function countCorrectWords() {
+    const typedChars = typedCharacters.split("");
+    let correct = 0;
+    let currentWordCorrect = true;
+
+    testCharacters.forEach((char, i) => {
+      if (typedChars[i] !== char) currentWordCorrect = false;
+      if (char === " ") {
+        if (currentWordCorrect) correct++;
+        currentWordCorrect = true;
+      }
+    });
+
+    return correct;
+  }
+
   //Changes in input element
   function handleChange(e) {
     const typedValue = e.target.value;
@@ -141,20 +150,12 @@ function TestView() {
     // Stop typing when time runs out
     if (timeLeft === 0) return;
 
-    //Prevent erasing into completed words
-    if (typedValue.length < typedCharacters.length) {
-      const spaceIndex = typedCharacters.lastIndexOf(" ");
-      if (spaceIndex !== -1 && typedValue.length <= spaceIndex) {
-        return;
-      }
-    }
-
     // Prevent typing beyond test text
     if (typedValue.length > testValue.length) return;
 
     //Word completion check
     if (typedValue.endsWith(" ") && !typedCharacters.endsWith(" ")) {
-      checkLastWord(typedValue);
+      setCorrectWords(countCorrectWords);
     }
 
     setTypedCharacters(typedValue);
