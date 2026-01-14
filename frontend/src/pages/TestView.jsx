@@ -46,8 +46,8 @@ function TestView() {
     if (!isRunning) return;
     if (timeLeft === 0) {
       let correctChars = 0;
-      for(let i = 0; i < typedCharacters.length; i ++){
-        if(typedCharacters[i] === testCharacters[i]) correctChars++;
+      for (let i = 0; i < typedCharacters.length; i++) {
+        if (typedCharacters[i] === testCharacters[i]) correctChars++;
       }
       const computedWpm = Math.round(
         correctChars / 5 / (selectedDuration / 60)
@@ -257,6 +257,11 @@ function TestView() {
           autoFocus
           value={typedCharacters}
           onChange={handleChange}
+
+          onPaste={(e) => e.preventDefault()}
+          onCopy={(e) => e.preventDefault()}
+          onCut={(e) => e.preventDefault()}
+          onContextMenu={(e) => e.preventDefault()}
           autoComplete="off"
           autoCorrect="off"
           spellCheck="false"
