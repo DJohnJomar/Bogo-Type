@@ -16,6 +16,7 @@ function TestView() {
   const [selectedDuration, setSelectedDuration] = useState(defaultDuration);
   const [wpm, setWpm] = useState(-1);
   const [accuracy, setAccuracy] = useState(-1);
+  const [errors, setErrors] = useState(-1);
 
   const inputRef = useRef(null);
   const wordsContainerRef = useRef(null);
@@ -50,7 +51,7 @@ function TestView() {
     //Compute WPM at end
     if (timeLeft === 0) {
       let correctChars = countCorrectChars();
-      let computedWpm = computeWpm(correctChars);
+      let computedWpm = computeWpmRound(correctChars);
       setWpm(computedWpm);
       return;
     }
@@ -103,16 +104,29 @@ function TestView() {
     };
   }, []);
 
-  function computeWpm(correctChars) {
-    return Math.round(correctChars / 5 / (selectedDuration / 60));
-  }
-
   function countCorrectChars() {
     let correctChars = 0;
     for (let i = 0; i < typedTestCharacters.length; i++) {
       if (typedTestCharacters[i] === testCharacters[i]) correctChars++;
     }
     return correctChars;
+  }
+
+  function computeWpmRound(correctChars) {
+    return Math.round(correctChars / 5 / (selectedDuration / 60));
+  }
+
+  function computeAccuracyRaw() {
+    let typedCount = typedTestCharacters.length;
+    let correctChars = countCorrectChars;
+    let accuracy = (correctChars / typedCount) * 100;
+    return accuracy;
+  }
+
+  function countErrors() {
+    let typedCount = typedTestCharacters.length;
+    let correctChars = countCorrectChars;
+    return typedCount - correctChars;
   }
 
   //Changes in input element - Triggers per keystroke
