@@ -8,7 +8,7 @@ function Key({ char, value, size, pressedKey }) {
   let stylePressed =
     pressedKey === value || pressedKey === value.toUpperCase()
       ? {
-          backgroundColor: "var(--keyPress)",
+          backgroundColor: "var(--neon-green)",
         }
       : {
           backgroundColor: "var(--darkerBg)",
@@ -18,7 +18,7 @@ function Key({ char, value, size, pressedKey }) {
       className="flex justify-center items-center h-8 rounded-xl text-(--white)"
       style={{ width: computedSize, transition, ...stylePressed }}
     >
-      <p className="text-base">{char}</p>
+      <p>{char}</p>
     </div>
   );
 }
