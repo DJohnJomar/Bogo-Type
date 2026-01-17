@@ -5,26 +5,26 @@ import restartIcon from "../assets/restartIcon.svg";
 import Character from "../components/Character.jsx";
 
 function TestView() {
+  const defaultDuration = 60;
+  const timeOptions = [15, 30, 60, 120];
+
   const [typedTestCharacters, setTypedCharacters] = useState("");
   const [testCharacters, setTestCharacters] = useState([]);
   const [isRunning, setIsRunning] = useState(false);
-  // const [correctWords, setCorrectWords] = useState(0);
   const [pressedKey, setPressedKey] = useState(null);
-  const defaultDuration = 60;
   const [timeLeft, setTimeLeft] = useState(defaultDuration);
   const [selectedDuration, setSelectedDuration] = useState(defaultDuration);
+  const [wpm, setWpm] = useState(-1);
+  const [accuracy, setAccuracy] = useState(-1);
 
   const inputRef = useRef(null);
-  const [wpm, setWpm] = useState(-1);
   const wordsContainerRef = useRef(null);
   const cursorRef = useRef(null);
-
-  const timeOptions = [15, 30, 60, 120];
 
   //Words API fetch
   async function getTestWords(wordCount) {
     const res = await fetch(
-      `https://random-word-api.vercel.app/api?words=${wordCount}`
+      `https://random-word-api.vercel.app/api?words=${wordCount}`,
     );
     const data = await res.json();
 
@@ -47,15 +47,10 @@ function TestView() {
   useEffect(() => {
     if (!isRunning) return;
 
-    //WPM computation
+    //Compute WPM at end
     if (timeLeft === 0) {
-      let correctChars = 0;
-      for (let i = 0; i < typedTestCharacters.length; i++) {
-        if (typedTestCharacters[i] === testCharacters[i]) correctChars++;
-      }
-      const computedWpm = Math.round(
-        correctChars / 5 / (selectedDuration / 60)
-      );
+      let correctChars = countCorrectChars();
+      let computedWpm = computeWpm(correctChars);
       setWpm(computedWpm);
       return;
     }
@@ -66,17 +61,6 @@ function TestView() {
 
     return () => clearInterval(interval);
   }, [isRunning, timeLeft]);
-
-  //Check last word when time hits 0
-  useEffect(() => {
-    if (
-      timeLeft === 0 &&
-      typedTestCharacters.length > 0 &&
-      !typedTestCharacters.endsWith(" ")
-    ) {
-      setCorrectWords(countCorrectWords);
-    }
-  }, [timeLeft]);
 
   //AutoScroll function
   useEffect(() => {
@@ -104,7 +88,6 @@ function TestView() {
   useEffect(() => {
     function handleDown(e) {
       setPressedKey(e.key);
-      // console.log(e.key);
     }
 
     function handleUp() {
@@ -120,22 +103,19 @@ function TestView() {
     };
   }, []);
 
-  function countCorrectWords() {
-    const typedWords = typedTestCharacters.trim().split(" ");
-    const testWords = testCharacters.join("").split(" ");
-
-    let correct = 0;
-
-    for (let i = 0; i < typedWords.length; i++) {
-      if (typedWords[i] === testWords[i]) {
-        correct++;
-      }
-    }
-
-    return correct;
+  function computeWpm(correctChars) {
+    return Math.round(correctChars / 5 / (selectedDuration / 60));
   }
 
-  //Changes in input element
+  function countCorrectChars() {
+    let correctChars = 0;
+    for (let i = 0; i < typedTestCharacters.length; i++) {
+      if (typedTestCharacters[i] === testCharacters[i]) correctChars++;
+    }
+    return correctChars;
+  }
+
+  //Changes in input element - Triggers per keystroke
   function handleChange(e) {
     const typedValue = e.target.value;
     const testValue = testCharacters.join("");
@@ -151,17 +131,11 @@ function TestView() {
     // Prevent typing beyond test text
     if (typedValue.length > testValue.length) return;
 
-    //Word completion check
-    if (typedValue.endsWith(" ") && !typedTestCharacters.endsWith(" ")) {
-      setCorrectWords(countCorrectWords);
-    }
-
     setTypedCharacters(typedValue);
   }
 
   function restartTest() {
     setTypedCharacters("");
-    setCorrectWords(0);
     setWpm(-1);
     setTimeLeft(selectedDuration);
     setIsRunning(false);
