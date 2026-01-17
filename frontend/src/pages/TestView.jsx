@@ -5,18 +5,20 @@ import restartIcon from "../assets/restartIcon.svg";
 import Character from "../components/Character.jsx";
 
 function TestView() {
-  const [typedCharacters, setTypedCharacters] = useState("");
+  const [typedTestCharacters, setTypedCharacters] = useState("");
   const [testCharacters, setTestCharacters] = useState([]);
   const [isRunning, setIsRunning] = useState(false);
-  const [correctWords, setCorrectWords] = useState(0);
+  // const [correctWords, setCorrectWords] = useState(0);
   const [pressedKey, setPressedKey] = useState(null);
-  const inputRef = useRef(null);
   const defaultDuration = 60;
   const [timeLeft, setTimeLeft] = useState(defaultDuration);
   const [selectedDuration, setSelectedDuration] = useState(defaultDuration);
+
+  const inputRef = useRef(null);
   const [wpm, setWpm] = useState(-1);
   const wordsContainerRef = useRef(null);
   const cursorRef = useRef(null);
+
   const timeOptions = [15, 30, 60, 120];
 
   //Words API fetch
@@ -32,7 +34,7 @@ function TestView() {
   }
 
   function isCursor(index) {
-    let currentCharIndex = typedCharacters.length - 1;
+    let currentCharIndex = typedTestCharacters.length - 1;
     return currentCharIndex === index ? true : false;
   }
 
@@ -44,10 +46,12 @@ function TestView() {
   //Timer function
   useEffect(() => {
     if (!isRunning) return;
+
+    //WPM computation
     if (timeLeft === 0) {
       let correctChars = 0;
-      for (let i = 0; i < typedCharacters.length; i++) {
-        if (typedCharacters[i] === testCharacters[i]) correctChars++;
+      for (let i = 0; i < typedTestCharacters.length; i++) {
+        if (typedTestCharacters[i] === testCharacters[i]) correctChars++;
       }
       const computedWpm = Math.round(
         correctChars / 5 / (selectedDuration / 60)
@@ -67,19 +71,14 @@ function TestView() {
   useEffect(() => {
     if (
       timeLeft === 0 &&
-      typedCharacters.length > 0 &&
-      !typedCharacters.endsWith(" ")
+      typedTestCharacters.length > 0 &&
+      !typedTestCharacters.endsWith(" ")
     ) {
       setCorrectWords(countCorrectWords);
     }
   }, [timeLeft]);
 
-  /*Auto Scrolls the words-container
-  vars:
-  cursorBottom = Position of the span cursor from top of the container to the bottom of the span (offsetTop + offsetHeight)
-  containerSccroll = how far the container have scrolled so far (scrollTop)
-  containerHeight = visible height of the container (clientHeight)
-  */
+  //AutoScroll function
   useEffect(() => {
     //Early exit if either refs doesn't exist
     if (!cursorRef.current || !wordsContainerRef.current) return;
@@ -99,7 +98,7 @@ function TestView() {
       wordsContainerRef.current.scrollTop =
         cursorBottom - containerHeight + lineHeight;
     }
-  }, [typedCharacters]);
+  }, [typedTestCharacters]);
 
   //Key Press handle for Keyboard Component
   useEffect(() => {
@@ -122,7 +121,7 @@ function TestView() {
   }, []);
 
   function countCorrectWords() {
-    const typedWords = typedCharacters.trim().split(" ");
+    const typedWords = typedTestCharacters.trim().split(" ");
     const testWords = testCharacters.join("").split(" ");
 
     let correct = 0;
@@ -153,7 +152,7 @@ function TestView() {
     if (typedValue.length > testValue.length) return;
 
     //Word completion check
-    if (typedValue.endsWith(" ") && !typedCharacters.endsWith(" ")) {
+    if (typedValue.endsWith(" ") && !typedTestCharacters.endsWith(" ")) {
       setCorrectWords(countCorrectWords);
     }
 
@@ -236,7 +235,7 @@ function TestView() {
               <Character
                 key={i}
                 char={char}
-                typed={typedCharacters[i]}
+                typed={typedTestCharacters[i]}
                 isCursor={isCursor(i)}
                 cursorRef={cursorRef}
               />
@@ -254,7 +253,7 @@ function TestView() {
           id="type-input"
           type="text"
           autoFocus
-          value={typedCharacters}
+          value={typedTestCharacters}
           onChange={handleChange}
           onPaste={(e) => e.preventDefault()}
           onCopy={(e) => e.preventDefault()}
