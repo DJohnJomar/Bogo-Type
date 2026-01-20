@@ -10,7 +10,7 @@
   user-select: none; /* Makes the paragraph with spans (the test) unable to be selected*/
   box-sizing: border-box;
   font-family: "Space Mono", monospace;
-  height: 9rem;
+  height: 8.5rem;
   overflow-y: hidden;
   scrollbar-width: none;
 }
