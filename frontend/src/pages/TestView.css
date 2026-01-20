@@ -1,21 +1,16 @@
-
-
 .TestView {
   width: 90%;
 }
 
 .words {
-  margin:0;
+  margin: 0;
   color: var(--text);
   filter: blur(5px);
   transition: filter 0.2s ease;
   user-select: none; /* Makes the paragraph with spans (the test) unable to be selected*/
   box-sizing: border-box;
   font-family: "Space Mono", monospace;
-}
-
-.words-container{
-  height:9rem;
+  height: 9rem;
   overflow-y: hidden;
   scrollbar-width: none;
 }
@@ -24,8 +19,8 @@
 .TestView:focus-within .words {
   filter: blur(0);
 }
-.TestView:focus-within label{
-  display:none;
+.TestView:focus-within label {
+  display: none;
 }
 
 label {
@@ -39,8 +34,8 @@ label {
   text-align: center;
 }
 
-label{
-  color:var(--white);
+label {
+  color: var(--white);
 }
 
 #type-input {
@@ -49,7 +44,7 @@ label{
   pointer-events: none;
 }
 
-.stat-display{
-  display:flex;
+.stat-display {
+  display: flex;
   justify-content: space-around;
 }

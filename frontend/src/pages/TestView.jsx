@@ -68,20 +68,17 @@ function TestView() {
     //Early exit if either refs doesn't exist
     if (!cursorRef.current || !wordsContainerRef.current) return;
 
-    const cursorBottom =
-      cursorRef.current.offsetTop + cursorRef.current.offsetHeight;
-    const containerScroll = wordsContainerRef.current.scrollTop;
-    const containerHeight = wordsContainerRef.current.clientHeight;
+    const cursor = cursorRef.current;
+    const container = wordsContainerRef.current;
+    const lineHeight = cursor.offsetHeight;
 
-    //Approximate one line height
-    const lineHeight = cursorRef.current.offsetHeight;
+    const relativeCursorTop = cursor.offsetTop - container.scrollTop;
+    const cursorLineIndex = Math.floor(relativeCursorTop / lineHeight);
 
-    // Scroll when only one line is left visible
-    const scrollThreshold = containerScroll + containerHeight - lineHeight;
+    const visibleLines = Math.floor(container.clientHeight / lineHeight);
 
-    if (cursorBottom > scrollThreshold) {
-      wordsContainerRef.current.scrollTop =
-        cursorBottom - containerHeight + lineHeight;
+    if (cursorLineIndex >= visibleLines - 1) {
+      container.scrollTop = cursor.offsetTop - (visibleLines - 1) * lineHeight;
     }
   }, [typedTestCharacters]);
 
@@ -217,8 +214,11 @@ function TestView() {
       </div>
 
       <div className="relative">
-        <div className="words-container cursor-pointer" ref={wordsContainerRef}>
-          <p className="words text-1xl text-[1.9rem] md:text-3xl lg:text-[2.4rem]">
+        <div className="cursor-pointer">
+          <p
+            className="words text-1xl text-[1.9rem] md:text-3xl lg:text-[2.4rem]"
+            ref={wordsContainerRef}
+          >
             {testCharacters.map((char, i) => (
               <Character
                 key={i}

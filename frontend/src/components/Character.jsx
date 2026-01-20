@@ -16,7 +16,7 @@ const Character = memo(function Character({
     transition: "color 0.2s ease, border-color 0.2s ease"
   };
   return (
-    <span style={style} ref={isCursor ? cursorRef : null}>
+    <span className=""style={style} ref={isCursor ? cursorRef : null}>
       {char}
     </span>
   );
