@@ -82,19 +82,6 @@ function TestView() {
     if (cursorBottom > scrollThreshold) {
       wordsContainer.scrollTop = cursorBottom - containerHeight + lineHeight;
     }
-
-    // const cursor = cursorRef.current;
-    // const container = wordsContainerRef.current;
-    // const lineHeight = cursor.offsetHeight;
-
-    // const relativeCursorTop = cursor.offsetTop - container.scrollTop;
-    // const cursorLineIndex = Math.floor(relativeCursorTop / lineHeight);
-
-    // const visibleLines = Math.floor(container.clientHeight / lineHeight);
-
-    // if (cursorLineIndex >= visibleLines - 1) {
-    //   container.scrollTop = cursor.offsetTop - (visibleLines - 1) * lineHeight;
-    // }
   }, [typedTestCharacters]);
 
   //Key Press handle for Keyboard Component
