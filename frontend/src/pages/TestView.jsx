@@ -117,14 +117,14 @@ function TestView() {
 
   function computeAccuracyRaw() {
     let typedCount = typedTestCharacters.length;
-    let correctChars = countCorrectChars;
+    let correctChars = countCorrectChars();
     let accuracy = (correctChars / typedCount) * 100;
     return accuracy;
   }
 
   function countErrors() {
     let typedCount = typedTestCharacters.length;
-    let correctChars = countCorrectChars;
+    let correctChars = countCorrectChars();
     return typedCount - correctChars;
   }
 
